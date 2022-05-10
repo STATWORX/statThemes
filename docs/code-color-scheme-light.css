@@ -1,0 +1,86 @@
+pre {
+  word-wrap: normal;
+  word-break: normal;
+  /*border: 1px solid #eee;*/
+  border: 0px !important;
+}
+
+/* NAVBAR COLOR */
+.bg-primary {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.navlogo {
+  content:url("statworx_X_white.png");
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 1);
+}
+
+.navbar-nav .nav-item.active .nav-link,
+.navbar-nav .nav-item:hover .nav-link {
+    color: white !important;
+}
+
+.navbar-brand.me-2 {
+  padding-left: 15px
+}
+
+.navbar-dark {
+  padding-top: 5px;
+  padding-bottom: 5px
+}
+
+pre, code {
+  background-color: #FFFFFF;
+  color: #333;
+}
+
+body {
+  font-family: Arial;
+  text-align: justify;
+  background-color: #FFFFFF;
+}
+
+h1, h2, h3, h4, h5 {
+    color: #0000FF;
+}
+
+pre code {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+pre .img {
+  margin: 5px 0;
+}
+
+pre .img img {
+  background-color: #fff;
+  display: block;
+  height: auto;
+}
+
+code a, pre a {
+  font-family: Arial;
+  color: #375f84;
+  text-decoration: underline;
+}
+
+a.sourceLine:hover {
+  text-decoration: none;
+}
+
+pre code span.fl      {color: #1514b5;}
+pre code span.fu      {color: #8c60bf;} /* function */
+pre code span.ch, pre code span.st  {color: #036a07;} /* string */
+pre code span.kw      {color: #264D66;} /* keyword */
+pre code span.co      {color: #888888;} /* comment */
+pre code span.va      {color: #3032da;} /* values */
+
+pre code span.message { color: black;   font-weight: bolder;}
+pre code span.error   { color: orange;  font-weight: bolder;}
+pre code span.warning { color: #6A0366; font-weight: bolder;}

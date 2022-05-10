@@ -1,0 +1,78 @@
+/* General font family & text alignment */
+body {
+  font-family: Arial;
+  text-align: justify;
+}
+
+/* Color of Headers */
+h1, h2, h3, h4, h5 {
+    color: #0000FF;
+}
+
+/* max width of main col
+.row > main {
+    max-width: 70rem;
+}
+*/
+
+/* max width of whole container
+.container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+    max-width: 1700px;
+}
+*/
+
+.bg-primary {
+  color: #2C3E4F;
+}
+
+.navbar-dark {
+  background-color: #2C3E4F;
+}
+/* Color of Index (= PKG Title) */
+.navbar-light .navbar-brand {
+  color: #0000FF;
+}
+
+/* HIDE DIV CLASSES
+  - License Sidebar
+  - Citation Sidebar
+*/
+
+.external-link > .roles {
+  display: none;
+}
+
+.license, .citation {
+  display: none;
+}
+
+/* HIDE DIV CLASSES
+  - Search Input // only usefull if site is not used locally
+*/
+.algolia-autocomplete, .form-inline.my-2.my-lg-0, .form-control.me-sm-2.aa-input {
+  display: none;
+}
+
+/* HIDE DIV CLASSES
+  - footer pkgdown right
+*/
+.pkgdown-footer-right {
+  display: none;
+}
+
+.copyright {
+  display: none;
+}
+
+.pkgdown {
+  display: none;
+}
+
+/* HIDE DIV CLASSES
+  - footer pkgdown left
+  NOTE: Hide only when necessary
+
+.pkgdown-footer-left {
+  display: none;
+}
+*/

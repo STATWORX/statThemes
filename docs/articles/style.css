@@ -1,0 +1,155 @@
+/* CSS Stylesheet */
+
+* {
+ font-family: Arial;
+}
+
+output {
+    font-family: Arial;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+/* Table  */
+th {
+  border-bottom: 1px solid #0000FF;
+  color: #0000FF;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+td {
+  border: none;
+  color: #283440;
+  font-size: 12px;
+  padding: 4px 15px;
+}
+td:hover {
+  color: #0000FF;
+  background: #F2F3FF;
+}
+
+/* Header  */
+h1{
+  border: 3px solid #0000FF;
+  border-bottom-color: #00000000;
+  border-right-color: #00000000;
+  border-left-color: #00000000;
+  color: #0000FF;
+  font-size: 24px;
+  font-weight: bold;
+  height: 45px;
+  line-height: 45px;
+  margin-top: 30px;
+  text-align: center;
+}   
+h2 {
+  border: 2px solid black;
+  border-bottom-color: #00000000;
+  border-right-color: #00000000;
+  border-left-color: #00000000;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  height: 40px;
+  line-height: 40px;
+  margin-top: 30px;
+  text-align: center;
+  text-shadow: 1px 1px #ffffff;
+}
+h3 {
+  color: black;
+  font-size: 16px;
+  font-weight: bold;
+  height: 30px;
+  line-height: 30px;
+}
+h4 {
+  color: black;
+  font-size: 14px;
+  font-weight: bold;
+  height: 28px;
+  line-height: 28px;
+}
+body {
+  color: #283440;
+  font-family: Arial;
+  font-size: 11pt;
+  text-align: justify;
+}
+
+/* TOC  */
+#TOC {
+  border-color: #0000FF;
+}
+#TOC>ul {
+  color: #0000FF;
+  font-size: 12px;
+}
+#TOC>ul>ul {
+  color: black;
+  font-size: 11px;
+}
+
+/* TOC: active elements  */
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+  background-color: #0000FF;
+  border-color: #0000FF;
+  color: white;
+  font-weight: bold;
+}
+
+/* TOC: hover  */
+.list-group-item:hover {
+  background-color: #F2F3FF;
+  color: #0000FF;
+  font-weight: bold;
+}
+
+/* nav-tabs and nav-pills: color and font size  */
+a {
+  color: black;
+  font-size: 11px;
+}
+
+/* nav-tabs and nav-pills: hover  */
+.nav>li>a:hover {
+  background-color: #F2F3FF;
+  border-color: none;
+  border-bottom-color: #0000FF;
+  color: #0000FF;
+  font-size: 11px;
+}
+
+/* nav-tabs */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+  background-color: white;
+  border-color: #0000FF;
+  border-bottom-color: #00000000;
+  color: #0000FF;
+  font-size: 11px;
+  font-weight: bold;
+}
+.nav-tabs{
+  border-bottom-color: #0000FF;
+}
+
+/* nav-pills  */
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{
+  background-color: #0000FF;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+/* Style all font awesome icons */
+.fa {
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+}
+.fa:hover {
+  opacity: 0.7;
+}
+
+
