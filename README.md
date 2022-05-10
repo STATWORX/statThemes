@@ -47,4 +47,4 @@ ggplot(iris, aes(Sepal.Width, Sepal.Length, color = Species)) +
 
 This gallery not only contains multiple graphics for common scenarios
 but also some guidelines to improve your data visualizations. You can
-find them here.
+find them [here](https://statworx.github.io/statThemes/).
