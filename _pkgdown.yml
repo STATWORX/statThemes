@@ -1,4 +1,16 @@
-url: ~
 template:
+  package: preferably
+  includes:
+    before_title: <img class="navlogo" src="statworx_X_white.png" width = "60" align="left" />
+  params:
+    toggle: manual
   bootstrap: 5
 
+navbar:
+  structure:
+    left: [articles, reference]
+
+authors:
+  Statworx:
+    href: https://www.statworx.com/
+    html: <img class="sidelogo" src="statworx-Logo-Black.png" alt="Statworx" width="110" align="top" />

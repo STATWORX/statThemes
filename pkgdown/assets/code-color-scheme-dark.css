@@ -1,0 +1,98 @@
+pre {
+  word-wrap: normal;
+  word-break: normal;
+  /*border: 1px solid #eee;*/
+  border: 0px !important;
+}
+
+/* NAVBAR COLOR */
+.bg-primary {
+    background-color: #0000FF !important;
+}
+
+/* NAVBAR LOGO */
+.navlogo {
+  content:url("statworx_X_white.png");
+}
+
+/* SIDEBAR LOGO */
+.sidelogo {
+  content:url("statworx-Logo-White.png");
+}
+
+/* PADDING */
+.navbar-brand.me-2 {
+  padding-left: 15px
+}
+
+.navbar-dark {
+  padding-top: 5px;
+  padding-bottom: 5px
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 1);
+}
+
+/* LOGO PATH */
+.logo {
+  content:url("statworx-Logo-White.png");
+}
+
+/* BG, TEXT & MORE */
+pre, code {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+body {
+  font-family: Arial;
+  text-align: justify;
+  background-color: #000000;
+}
+
+pre code {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+h1, h2, h3, h4, h5, p {
+    color: #ffffff;
+}
+
+/* COLOR OF ROLES */
+aside .roles {
+  color: #ffffff;
+}
+
+pre .img {
+  margin: 5px 0;
+}
+
+pre .img img {
+  background-color: #aaa;
+  display: block;
+  height: auto;
+}
+
+code a, pre a {
+  font-family: Arial;
+  color: #375f84;
+  text-decoration: underline;
+}
+
+a.sourceLine:hover {
+  text-decoration: none;
+}
+
+pre code span.fl      {color: #ae81ff;}
+pre code span.fu      {color: #ade837;} /* function */
+pre code span.ch, pre code span.st  {color: #e7db74;} /* string */
+pre code span.kw      {color: #f92672;} /* keyword */
+pre code span.co      {color: #696d70;} /* comment */
+pre code span.va      {color: #fd971f;} /* values */
+
+pre code span.message { color: black;   font-weight: bolder;}
+pre code span.error   { color: orange;  font-weight: bolder;}
+pre code span.warning { color: #6A0366; font-weight: bolder;}

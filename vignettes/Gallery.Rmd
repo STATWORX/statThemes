@@ -1,0 +1,1063 @@
+---
+title: "Gallery"
+output:
+  html_document:
+    css: style.css
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+toc_depth: 3
+number_sections: true
+vignette: >
+  %\VignetteIndexEntry{Gallery}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+# -------- REPORT TEMPLATE -------- #
+# This template provides statworx CI palettes and helpful functions for formatting graphs and tables.
+# Follow the sequentially numbered steps.
+
+knitr::opts_chunk$set(echo = TRUE)
+htmltools::tagList(rmarkdown::html_dependency_font_awesome())
+```
+
+```{r setup, message=FALSE, echo=FALSE}
+library(statworxThemes)
+library(xml2)
+library(knitr)
+library(viridis)
+library(scales)
+library(ggpubr)
+library(tidyverse)
+library(reshape2)
+library(data.table)
+library(grid)
+library(directlabels)
+library(cowplot)
+library(gcookbook)
+library(gapminder)
+library(ggExtra)
+devtools::install_github("hrbrmstr/waffle")
+library(waffle)
+library(treemapify)
+library(gghighlight)
+library(ggridges)
+library(ggforce)
+```
+
+
+# Gallery
+The gallery should help you to see the themes and colors applied in
+different plots. This template can also serve as an inspiration to get an idea of which graphics might be suitable for your case. Note that this template should not be considered as a 1 to 1 guideline but rather as a tool which helps statworx to create a more coherent picture when visualizing data.
+
+# Distributions {.tabset .tabset-fade}
+
+## Density chart
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+# also plot a single distribution and say which color
+
+# which alpha to use
+
+
+set.seed(100)
+df <- data.frame(class = c(rep("A", 200)),
+                 val = c(rnorm(200, 0, 1)))
+
+col_list <- c("#0000BF")
+
+ggplot(df, aes(x = val)) +
+  geom_density(aes(fill = class), alpha = 0.8) +
+  scale_fill_statworx(palette = "custom", col_list = col_list) + 
+  statworx_hc2() + 
+  scale_y_continuous(expand = c(0, 0))  +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") 
+
+
+
+
+
+set.seed(100)
+df <- data.frame(class = c(rep("A", 200), rep("B", 200)),
+                 val = c(rnorm(200, 0, 1), rnorm(200, 1, 1)))
+
+col_list <- c("#0000BF", "#9BAEC1")
+
+ggplot(df, aes(x = val, group = class)) +
+  geom_density(aes(fill = class), alpha = 0.5) +
+  scale_fill_statworx(palette = "custom", col_list = col_list) + 
+  statworx_hc2() + 
+  scale_y_continuous(expand = c(0, 0))  +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") 
+
+```
+
+## Density chart multiple
+
+**_NOTE:_** For more than 3 densities the plot can get very cluttered. While you change the plot type to violin plots or jittered box plots there are further alternative ways of displaying densities as depicted in the following tabset which help to reduce the clutter.
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+#https://clauswilke.com/dataviz/histograms-density-plots.html
+
+
+# use an alpha maybe or say that this is good for disitinc disitrbutions
+# direct labeling with color of label ?
+
+# reduced color choice with no signal colors
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF")
+
+ggplot(data=iris) +
+  geom_density(aes(x=Sepal.Width, fill = Species), show.legend=TRUE, alpha=.5) +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  ylim(0,1.5) +
+  scale_fill_statworx(palette = "custom", col_list = col_list) + statworx_hc2() 
+
+
+# more poppi with more signals
+col_list <- c("#0000BF", "#9BAEC1", "#C7014F")
+
+ggplot(data=iris) +
+  geom_density(aes(x=Sepal.Width, fill = Species), show.legend=TRUE, alpha=.5) +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  ylim(0,1.5) +
+  scale_fill_statworx(palette = "custom", col_list = col_list) + statworx_hc2() 
+
+# could be too cluttert in this case view some alternatvies (ridgeline or facetting), or you could do violin plots or
+# jittered boxplots
+
+
+######
+# for more than 3 densities it becomes too clutter -> transfer to alternatives
+```
+
+
+
+### Alternatives denisty {.tabset .tabset-fade}
+
+#### No Fill
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+col_list <- c("#0000BF", "#7D8AA4", "#9999FF")
+
+ggplot(data=iris) +
+  geom_density(aes(x=Sepal.Width, color=Species), show.legend=FALSE)+
+  stat_density(aes(x=Sepal.Width, color=Species), geom="line",position="identity") +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  ylim(0,1.5) +
+  scale_color_statworx(palette = "custom", col_list = col_list) + statworx_hc2() 
+
+```
+
+#### Facet
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+col_list <- c("#0000BF", "#7D8AA4", "#9999FF")
+
+ggplot(data=iris) +
+  geom_density(aes(x=Sepal.Width, color=Species), show.legend=FALSE)+
+  stat_density(aes(x=Sepal.Width, color=Species), geom="line",position="identity") +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  ylim(0,1.5) + 
+  scale_color_statworx(palette = "custom", col_list = col_list) + statworx_hc2() +
+  gghighlight(use_direct_label = F) +
+  facet_wrap(~Species) +
+  theme(strip.background = element_blank()) +
+  scale_x_continuous(breaks = c(2, 3, 4))
+```
+
+
+## Violin chart
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+# create a dataset
+data <- data.frame(
+  name=c( rep("A",500), rep("B",500), rep("B",500), rep("C",20), rep('D', 100)  ),
+  value=c( rnorm(500, 10, 5), rnorm(500, 13, 1), rnorm(500, 18, 1), rnorm(20, 25, 4), rnorm(100, 12, 1) )
+)
+
+
+# Plot
+data %>%
+  ggplot( aes(x=name, y=value)) +
+    geom_violin(width=1.4, fill="#9BAEC1") +
+    geom_boxplot(width=0.1, alpha=0.2, show.legend = FALSE) +
+    labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+    statworx_minimal() + 
+    scale_fill_statworx(palette = "custom", col_list = col_list) 
+
+# Load dataset from github
+data <- read.table("https://raw.githubusercontent.com/zonination/perceptions/master/probly.csv", header=TRUE, sep=",")
+
+# Data is at wide format, we need to make it 'tidy' or 'long'
+data <- data %>% 
+  gather(key="text", value="value") %>%
+  mutate(text = gsub("\\.", " ",text)) %>%
+  mutate(value = round(as.numeric(value),0)) %>%
+  filter(text %in% c("Almost Certainly","Very Good Chance","We Believe","Likely","About Even", "Little Chance", "Chances Are Slight", "Almost No Chance"))
+
+# Plot
+data %>%
+  mutate(text = fct_reorder(text, value)) %>% # Reorder data
+  ggplot( aes(x=text, y=value)) +
+    geom_violin(width=2.1, size=0.2,fill="#9BAEC1") +
+    theme(
+      legend.position="none"
+    ) +
+    coord_flip() + statworx_minimal() +
+    theme(
+      legend.position="none"
+    ) +
+    labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") 
+    #scale_fill_statworx(palette = "statworx_palette") +
+    #scale_color_statworx(palette = "statworx_palette") 
+
+```
+
+## Ridgeline
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF")
+
+ggplot(data=iris) +
+  geom_density_ridges(aes(y = Species,  x=Sepal.Width, fill = Species), alpha=0.8) +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  scale_fill_statworx(palette = "custom", col_list = col_list) + statworx_hc2() 
+```
+
+
+## Histogram
+
+**_NOTE:_** When making a histogram, always explore multiple bin widths. In addition, avoid overlapping histograms as they can be confused with stacked bar charts.
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+#https://clauswilke.com/dataviz/histograms-density-plots.html
+
+data <- data.frame(
+  type = c( rep("variable 1", 1000), rep("variable 2", 1000) ),
+  value = c( rnorm(1000), rnorm(1000, mean=4) )
+)
+
+col_list <- c("#0000BF", "#9BAEC1")
+
+data %>%
+  ggplot( aes(x=value, fill=type)) +
+    geom_histogram( color="#e9ecef", alpha=0.8, position = 'identity') + labs(title = "Lorem ipsum",
+                              subtitle = "Consetetur Sadipscing Elitr") +
+  scale_y_continuous(expand = c(0, 0), limits = c(0, 200))  +
+  scale_fill_statworx(palette = "custom", col_list = col_list) + statworx_classic()
+
+```
+
+
+
+## Boxplot
+
+**_NOTE:_** Adding jittered points to a box plot is useful to see the underlying distribution of the data. 
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+# create a dataset
+data <- data.frame(
+  name=c( rep("A",500), rep("B",500), rep("B",500), rep("C",20), rep('D', 100)  ),
+  value=c( rnorm(500, 10, 5), rnorm(500, 13, 1), rnorm(500, 18, 1), rnorm(20, 25, 4), rnorm(100, 12, 1) )
+)
+
+# Plot
+data %>%
+  ggplot( aes(x=name, y=value, fill=name)) +
+    geom_boxplot(fill = "#9BAEC1") + 
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +   
+  xlab("Group") + statworx_classic()
+
+##### here note that adding jitter to boxplots shows better the density
+
+data %>%
+  ggplot( aes(x=name, y=value, fill=name)) +
+    geom_boxplot(fill = "#9BAEC1", show.legend = F) +
+    geom_jitter(color="#7D8AA4", size=0.7, alpha=0.5, show.legend = F) +
+    labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +   
+  xlab("Group") + statworx_classic()
+
+
+```
+
+
+
+# Trend & Time {.tabset .tabset-fade}
+
+## Series
+
+**_NOTE:_** For a single line one can also fill the area under the curve with a solid color. This choice can emphasize a trend in the data, because it visually separates the area above the curve from the area below. 
+
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+df <- economics %>% dplyr::select(date, psavert, uempmed) %>% gather(key = "variable", value = "value", -date)
+
+df2 <- df %>% filter(variable == "uempmed")
+
+ggplot(df2, aes(x = date, y = value)) + 
+  geom_line(color = "#0000BF") +
+  geom_area(fill = "#0000BF",
+              alpha = 0.5, position = 'identity') +
+  statworx_hc2() + labs(title = "Lorem ipsum",
+                              subtitle = "Consetetur Sadipscing Elitr") 
+
+
+col_list <- c("#0000BF", "#9BAEC1")
+
+ggplot(df, aes(x = date, y = value)) + 
+  geom_line(aes(color = variable)) +
+  statworx_hc2() + labs(title = "Lorem ipsum",
+                              subtitle = "Consetetur Sadipscing Elitr") +
+  scale_color_statworx(palette = "custom", col_list = col_list)
+
+```
+
+
+## Series multiple
+
+**_NOTE:_** For multiple time series there is danger of visualizing a spaghetti chart. Hence, one technique to reduce the mental load is to directly label the lines since matching multiple lines with the legend is cumbersome. Alternatively, if the clutter is too overwhelming the following tabset presents further techniques to plot multiple series.
+
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+set.seed(1)
+x <- 1:100
+var_x <- cumsum(rnorm(100))
+var1 <- (var_x^2)*0.5
+var2 <- (var_x^2)*0.1
+var3 <- (var_x^2)*0.2
+var4 <- (var_x^2)*0.3
+var5 <- (var_x^2)*0.4
+data <- data.frame(x,var1,var2,var3,var4,var5)
+
+df2 <- melt(data,id.vars = "x")
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#009600")
+
+ggplot(data = df2, aes(x = x, y = value, colour = variable)) + geom_line() +
+  coord_cartesian(expand = FALSE, clip = 'off') + scale_color_statworx("custom", col_list = col_list) +
+  labs(title = "Lorem ipsum",
+       subtitle = "Consetetur Sadipscing Elitr") + statworx_hc2() +
+  theme(legend.position = "none",
+            plot.margin = margin(5, t = 20, r = 50)) +
+  geom_dl(aes(label = variable),
+                method = list(dl.trans(x = x + 0.2), "last.points", cex = 0.8))
+
+
+col_list <- c("#0000BF", "#9BAEC1", "#C7014F", "#83FF83", "#9999FF")
+
+ggplot(data = df2, aes(x = x, y = value, colour = variable)) + geom_line() +
+  coord_cartesian(expand = FALSE, clip = 'off') + scale_color_statworx("custom", col_list = col_list) +
+  labs(title = "Lorem ipsum",
+       subtitle = "Consetetur Sadipscing Elitr") + statworx_hc2() +
+  theme(legend.position = "none",
+            plot.margin = margin(5, t = 20, r = 50)) +
+  geom_dl(aes(label = variable),
+                method = list(dl.trans(x = x + 0.2), "last.points", cex = 0.8))
+
+
+```
+
+### Alternatives multiple series {.tabset .tabset-fade}
+
+#### Facet
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+set.seed(1)
+x <- 1:100
+var_x <- cumsum(rnorm(100))
+var1 <- (var_x^2)*0.5
+var2 <- (var_x^2)*0.1
+var3 <- (var_x^2)*0.2
+var4 <- (var_x^2)*0.3
+var5 <- (var_x^2)*0.4
+data <- data.frame(x,var1,var2,var3,var4,var5)
+
+df2 <- melt(data,id.vars = "x")
+
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#009600")
+
+
+ggplot(data = df2, aes(x = x, y = value, colour = variable)) + 
+  geom_line() +
+  coord_cartesian(expand = FALSE, clip = 'off') + 
+  scale_color_statworx("custom", col_list = col_list) + statworx_hc2() +
+  gghighlight(use_direct_label = F) +
+  facet_wrap(~variable) +
+  theme(strip.background = element_blank()) +
+  statworx_hc2() +
+    labs(title = "Lorem ipsum",
+       subtitle = "Consetetur Sadipscing Elitr") +
+    theme(strip.background = element_blank(),
+          panel.spacing.x = unit(1, "lines"),
+          panel.spacing.y = unit(1, "lines"))
+
+
+```
+
+
+## Stacked Area chart
+
+**_NOTE:_** Consider this type of chart if you attempt to visualize an evolution of the whole and the relative proportions of each group. However, use stacked are charts cautiously since they can be hard to read due to moving baselines.
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+options(scipen = 5)
+data(uspopage, package = "gcookbook")
+
+us_dplyr<-uspopage%>%
+ group_by(Year)%>%
+ mutate(percentage=Thousands/sum(Thousands)*100)
+
+
+ggplot(uspopage, aes(x=Year, y=Thousands, fill=AgeGroup)) + geom_area() +
+  statworx_minimal() + scale_fill_statworx(palette = "custom", col_list = statworx_palettes$statworx_standards_1) +
+  labs(title = "Lorem ipsum",subtitle = "Consetetur Sadipscing Elitr")
+
+ggplot(uspopage, aes(x=Year, y=Thousands, fill=AgeGroup)) + geom_area() +
+  statworx_minimal() + scale_fill_statworx(palette = "custom", col_list = statworx_palettes$statworx_standards_2) +
+  labs(title = "Lorem ipsum",subtitle = "Consetetur Sadipscing Elitr")
+```
+
+
+## Forecast
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+ts_object <- ts(BJsales, start = c(2000, 1), frequency = 12)
+
+hw_object<-HoltWinters(ts_object)
+
+forecast <- predict(hw_object,  n.ahead=12,  prediction.interval=T,  level = .95)
+    
+for_values <-
+  data.frame(
+    time = round(time(forecast),  3),
+    value_forecast = as.data.frame(forecast)$fit,
+    dev = as.data.frame(forecast)$upr - as.data.frame(forecast)$fit
+  )
+
+fitted_values <-
+  data.frame(time = round(time(hw_object$fitted),  3),
+             value_fitted = as.data.frame(hw_object$fitted)$xhat)
+
+actual_values <-
+  data.frame(time = round(time(hw_object$x),  3),  Actual = c(hw_object$x))
+
+graphset <- merge(actual_values,  fitted_values,  by = 'time',  all = TRUE)
+graphset <- merge(graphset,  for_values,  all = TRUE,  by = 'time')
+graphset[is.na(graphset$dev),]$dev <- 0
+
+graphset$Fitted <-
+  c(rep(NA,  NROW(graphset) - (NROW(for_values) + NROW(fitted_values))),
+    fitted_values$value_fitted,
+    for_values$value_forecast)
+
+    
+graphset.melt <-
+  melt(graphset[, c('time', 'Actual', 'Fitted')], id = 'time')
+
+forecast_values <- graphset.melt[312:324,]
+forecast_values$variable <- "Forecast"
+graphset.melt <- graphset.melt[1:311,]
+graphset.melt <- rbind(graphset.melt, forecast_values)
+
+col_list <- c("#0000BF", "#9BAEC1", "#C7014F")
+
+ggplot(graphset.melt,  aes(x = time,  y = value)) + geom_ribbon(
+    data = graphset, aes(x = time, y = Fitted, ymin = Fitted - dev,
+      ymax = Fitted + dev), alpha = .2, fill = "#9BAEC1") + 
+  geom_line(aes(colour=variable)) +
+  statworx_hc2() + geom_vline(xintercept =max(actual_values$time),  lty=2) +
+  scale_color_statworx(palette = "custom", col_list = col_list) +
+  labs(title = "Lorem ipsum",
+                              subtitle = "Consetetur Sadipscing Elitr")
+    
+```
+
+
+
+# Relationship {.tabset .tabset-fade}
+
+## Scatter chart
+
+**_NOTE:_** The second plot shows a common problem to scatter plots, namely overplottling. The following tabset of alternatives present some easy workarounds. If a categorical variable is present common techniques such as facetting or highlighting apply.
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+# Save the scatter plot in a variable
+p <- ggplot(cars, aes(x = speed, y = dist)) + geom_point(size = 2, color = "#0000BF") + 
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  statworx_box()
+
+p
+
+
+N <- 5000
+dt <- data.table(
+  Group = LETTERS[rbinom(N, 2, rep(1/3, 3)) + 1],
+  X = rnorm(N, 50, 5)
+)
+dt[X <= 45, Group := LETTERS[rbinom(.N, 1, 0.4) + 1]]
+dt[X > 55, Group := LETTERS[rbinom(.N, 1, 0.6) + 2]]
+dt[Group=="A", Y := 10 + 1.25*X + rnorm(.N, 0, 10)]
+dt[Group=="B", Y := 10 + 1.35*X + rnorm(.N, 0, 10)]
+dt[Group=="C", Y := X - 50 + 1.45*X + rnorm(.N, 0, 10)]
+
+
+ggplot(dt, aes(X, Y)) + geom_point(size=2, color = "#0000BF") + 
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  statworx_box()
+
+```
+
+
+### Alternatives scatter {.tabset .tabset-fade}
+
+#### Dot Size
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+N <- 5000
+dt <- data.table(
+  Group = LETTERS[rbinom(N, 2, rep(1/3, 3)) + 1],
+  X = rnorm(N, 50, 5)
+)
+dt[X <= 45, Group := LETTERS[rbinom(.N, 1, 0.4) + 1]]
+dt[X > 55, Group := LETTERS[rbinom(.N, 1, 0.6) + 2]]
+dt[Group=="A", Y := 10 + 1.25*X + rnorm(.N, 0, 10)]
+dt[Group=="B", Y := 10 + 1.35*X + rnorm(.N, 0, 10)]
+dt[Group=="C", Y := X - 50 + 1.45*X + rnorm(.N, 0, 10)]
+
+
+ggplot(dt, aes(X, Y)) + geom_point(size=0.02, color = "#0000BF") + 
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  statworx_box()
+```
+
+#### Transparency
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+N <- 5000
+dt <- data.table(
+  Group = LETTERS[rbinom(N, 2, rep(1/3, 3)) + 1],
+  X = rnorm(N, 50, 5)
+)
+dt[X <= 45, Group := LETTERS[rbinom(.N, 1, 0.4) + 1]]
+dt[X > 55, Group := LETTERS[rbinom(.N, 1, 0.6) + 2]]
+dt[Group=="A", Y := 10 + 1.25*X + rnorm(.N, 0, 10)]
+dt[Group=="B", Y := 10 + 1.35*X + rnorm(.N, 0, 10)]
+dt[Group=="C", Y := X - 50 + 1.45*X + rnorm(.N, 0, 10)]
+
+
+ggplot(dt, aes(X, Y)) + geom_point(size=2, color = "#0000BF", alpha=0.06) + 
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  statworx_box()
+
+```
+
+
+## Bubble chart
+
+**_NOTE:_** The differences between values encoded as bubble size are harder to perceive than differences between values encoded as position. Hence, the "All-against-all chart" is on alternative. In addition, one can also opt for a correlogram as described in the next section. Besides, bubble charts can also suffer from overplotting.
+
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+options(scipen = 5)
+# The dataset is provided in the gapminder library
+data <- gapminder %>% filter(year=="2007") %>% dplyr::select(-year)
+
+
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#C7014F")
+
+data %>%
+  arrange(desc(pop)) %>%
+  mutate(country = factor(country, country)) %>%
+  ggplot(aes(x=gdpPercap, y=lifeExp, size=pop, color=continent)) +
+    geom_point(alpha=0.8) +
+    scale_size(range = c(1.4, 15), name="Population (M)") +
+  statworx_scientific() + 
+   labs(title = "Lorem ipsum",
+                              subtitle = "Consetetur Sadipscing Elitr") +
+  scale_color_statworx(palette = "custom", col_list = col_list) 
+
+
+# 
+# col_list <- c("#0000BF", "#9BAEC1", "#C7014F", "#83FF83", "#9999FF")
+# 
+# data %>%
+#   arrange(desc(pop)) %>%
+#   mutate(country = factor(country, country)) %>%
+#   ggplot(aes(x=gdpPercap, y=lifeExp, size=pop, color=continent)) +
+#     geom_point(alpha=0.8) +
+#     scale_size(range = c(.1, 24), name="Population (M)") +
+#   statworx_scientific() + 
+#    labs(title = "Lorem ipsum",
+#                               subtitle = "Consetetur Sadipscing Elitr") +
+#   scale_color_statworx(palette = "custom", col_list = col_list)
+
+```
+
+
+## All-against-all
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+# The dataset is provided in the gapminder library
+data <- gapminder %>% filter(year=="2007") %>% dplyr::select(-year)
+
+
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#FF9EC4", "#C7014F")
+
+
+
+data <- data %>%
+  arrange(desc(pop)) %>%
+  mutate(country = factor(country, country))
+
+data$pop <- data$pop/100000 
+data$gdpPercap <- data$gdpPercap/1000 
+
+ggplot(data) +
+  geom_point(aes(x = .panel_x, y = .panel_y, color = continent), size = 0.8) +
+  facet_matrix(vars(gdpPercap, lifeExp, pop)) +
+  scale_color_statworx(palette = "custom", col_list = col_list) +
+  statworx_modern() + 
+  theme(panel.spacing = unit(1, "lines")) +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr",
+       caption = "population 1/100000, gdp per capita 1/100") +
+  theme(strip.background = element_blank())
+
+```
+
+
+
+## Correlation
+
+**_NOTE:_** When we have more than three to four quantiative variables, all-against-all scatter plot matrices quickly become unwieldy. In this case, it is more useful to quantify the amount of association between pairs of variables and visualize this quantity rather than the raw data.
+
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+mydata <- mtcars[, c(1,3,4,5,6,7)]
+cormat <- round(cor(mydata),2)
+# Get upper triangle of the correlation matrix
+get_upper_tri <- function(cormat){
+    cormat[lower.tri(cormat)]<- NA
+    return(cormat)
+}
+
+reorder_cormat <- function(cormat){
+# Use correlation between variables as distance
+dd <- as.dist((1-cormat)/2)
+hc <- hclust(dd)
+cormat <-cormat[hc$order, hc$order]
+}
+
+
+# Reorder the correlation matrix
+cormat <- reorder_cormat(cormat)
+upper_tri <- get_upper_tri(cormat)
+# Melt the correlation matrix
+melted_cormat <- melt(upper_tri, na.rm = TRUE)
+# Create a ggheatmap
+ggheatmap <- ggplot(melted_cormat, aes(Var2, Var1, fill = value))+
+ geom_tile(color = "white")+
+  statworx_minimal() + # minimal theme
+ theme(axis.text.x = element_text(angle = 45, vjust = 1, 
+    size = 12, hjust = 1))+
+ coord_fixed()
+
+
+
+cor_plot <- ggheatmap + 
+geom_text(aes(Var2, Var1, label = value), color = "black", size = 4) +
+  theme(
+  axis.title.x = element_blank(),
+  axis.title.y = element_blank(),
+  panel.grid.major = element_blank(),
+  panel.border = element_blank(),
+  panel.background = element_blank(),
+  axis.ticks = element_blank(),
+  legend.title = element_blank()) +
+  labs(title = "Lorem ipsum",
+                              subtitle = "Consetetur Sadipscing Elitr") 
+
+cor_plot + scale_fill_gradient2(high = "#0000BF", low = "#FFFFFF", mid = "#9999FF", 
+   midpoint = 0, limit = c(-1,1), space = "Lab", 
+    name="Pearson\nCorrelation")
+
+
+```
+
+# Comparison {.tabset .tabset-fade}
+
+## Bar chart
+
+**_NOTE:_** One should only rearrange bars, when there is no natural ordering to the categories. Whenever there is a natural ordering (i.e. when our categorical variable is an ordered factor) one should keep the original ordering in the visualization. 
+<br>
+When bars are of similar length it is visually less appealing to use bar plots ("Moire effect"). In this case, one can resort to use Lollipop charts.
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4")
+
+# Create data
+data <- data.frame(
+  name=c("A","B","C","D","E") ,  
+  value=c(3,12,5,18,45)
+  )
+
+# Barplot
+ggplot(data, aes(x=reorder(name,+value), y=value)) + 
+  geom_bar(stat = "identity",fill = "#0000BF") +
+  statworx_hc() + ylab("value") + xlab("type") + 
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") 
+
+
+
+# Create data
+data <- data.frame(
+  name=c("longer_name_A","longer_name_B","longer_name_C","longer_name_D","longer_name_E"),value=c(3,12,5,18,45))
+
+# Barplot
+ggplot(data, aes(x=reorder(name,+value), y=value)) + 
+  geom_bar(stat = "identity",fill = "#0000BF") +
+  statworx_flip() +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  coord_flip(clip = "off") + xlab("value") + ylab("type")
+
+```
+
+
+## Lollipop chart
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+set.seed(1)
+
+df <- data.frame(x = LETTERS[1:10],
+                 y = sample(20:35, 10, replace = TRUE))
+
+ggplot(df, aes(x = reorder(x, -y), y = y)) +
+  geom_segment(aes(x = reorder(x, -y),
+                   xend = reorder(x, -y),
+                   y = 0, yend = y),
+               color = "#9BAEC1", lwd = 1) +
+  geom_point(size = 3, color = "#0000BF") +
+  xlab("Group") +
+  ylab("") +
+  coord_flip() +
+  statworx_classic() +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr")
+
+
+```
+
+
+## Paired and stacked bar chart
+
+**_NOTE:_** For multiple groups and subgroups the comparison gets more difficult across and within. the bars. In addition, the clutter of the plot increases. Two alternatives to the bar chart are presented below.
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+data <- data.frame(x = c(7,9,8,1,4,6,5,9,6,4,8,5), 
+                   grp = rep(c("group 1", "group 2",
+                               "group 3","group 4"),
+                               each = 3),
+                   subgroup = LETTERS[1:3])
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF")
+
+ggplot(data, aes(x=grp, y=x, fill = subgroup)) + 
+  geom_bar(stat = "identity", position = "dodge") +
+  statworx_hc() + ylab("type") + 
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  scale_fill_statworx(palette = "custom", col_list = col_list) 
+
+
+ggplot(data, aes(x=grp, y=x, fill = subgroup)) + 
+  geom_bar(stat = "identity") +
+  statworx_hc() + ylab("type") + 
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  scale_fill_statworx(palette = "custom", col_list = col_list) 
+
+```
+
+## Dot chart
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF")
+
+data <- data.frame(x = c(7,9,8,1,4,6,5,9,6,4,8,5), 
+                   grp = rep(c("group 1", "group 2",
+                               "group 3","group 4"),
+                               each = 3),
+                   subgroup = LETTERS[1:3])
+
+
+ggplot(data, aes(x=grp, y=x, colour = subgroup)) +
+  geom_point() + statworx_hc() + ylab("type") + 
+  coord_flip() + 
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  scale_color_statworx(palette = "custom", col_list = col_list) 
+
+```
+
+## Waffle chart
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+
+data <- data.frame(x = c(7,9,8,1,4,6,5,9,6,4,8,5), 
+                   grp = rep(c("group 1", "group 2",
+                               "group 3","group 4"),
+                               each = 3),
+                   subgroup = LETTERS[1:3])
+
+ggplot(data, aes(fill = subgroup, values = x)) +
+  geom_waffle(
+    n_rows = 5, size = 0.33, colour = "white", flip = TRUE
+  ) +
+  facet_wrap(~grp) +
+  scale_fill_manual(
+                    values = c("#0000BF", "#9BAEC1", "#9999FF"),
+                    labels = c("A", "B", "C")) +
+    labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr", fill = "subgroup") +
+  statworx_void() +
+  theme(strip.text.x = element_text(vjust = 1)) 
+
+```
+
+## Marimekko chart
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+# using diamonds dataset for illustration
+df <- diamonds %>%
+  group_by(cut, clarity) %>%
+  summarise(count = n()) %>%
+  mutate(cut.count = sum(count),
+         prop = count/sum(count)) %>%
+  ungroup()
+
+
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#C7014F", "#83FF83", "#FF9EC4",
+               "#009600")
+
+ggplot(df,
+       aes(x = cut, y = prop, width = cut.count, fill = clarity)) +
+  geom_bar(stat = "identity", position = "fill", colour = "black") +
+  facet_grid(~cut, space = "free_x", scales = "free_x") +
+  scale_fill_statworx(palette = "custom", col_list = col_list) +
+  statworx_void() + labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  theme(panel.spacing = unit(0.007,"cm"))
+
+
+
+col_list <- c("#0000BF", "#9BAEC1", "#C7014F", "#83FF83", "#9999FF", "#7D8AA4", "#FF9EC4",
+              "#009600")
+
+ggplot(df,
+       aes(x = cut, y = prop, width = cut.count, fill = clarity)) +
+  geom_bar(stat = "identity", position = "fill", colour = "black") +
+  facet_grid(~cut, space = "free_x", scales = "free_x") +
+  scale_fill_statworx(palette = "custom", col_list = col_list) +
+  statworx_void() + labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") +
+  theme(panel.spacing = unit(0.007,"cm"))
+
+```
+
+<!-- ## Waffle -->
+<!-- ```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE} -->
+
+<!-- # Data -->
+<!-- df <- data.frame(group = c("A", "B", "C", "D", "E"), -->
+<!--                  value = c(44, 12, 8, 8, 3)) -->
+
+<!-- # Waffle plot -->
+<!-- ggplot(df, aes(fill = group, values = value)) + -->
+<!--   geom_waffle(n_rows = 8, size = 0.33, colour = "white") + -->
+<!--   scale_fill_manual( -->
+<!--                     values = c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#C7014F"), -->
+<!--                     labels = c("A", "B", "C", "D", "E")) + -->
+<!--   coord_equal() + -->
+<!--   statworx_void() + -->
+<!--   labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr", fill = "Group") -->
+
+
+<!-- ``` -->
+
+
+## Heatmap
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+
+col_list <- c("#0000bf", "#1156ec", "#3274ef", "#2d87ef", "#79aef4", "#ffffff")
+# Data 
+set.seed(8)
+m <- matrix(round(rnorm(200), 2), 10, 10)
+colnames(m) <- paste("Col", 1:10)
+rownames(m) <- paste("Row", 1:10)
+
+# Transform the matrix in long format
+df <- melt(m)
+colnames(df) <- c("x", "y", "value")
+
+
+ggplot(df, aes(x = x, y = y, fill = value)) +
+  geom_tile() + 
+  geom_text(aes(label = value), color = "black", size = 3) +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr", fill = "value") +
+  coord_fixed() +
+  statworx_box() +
+  ylab(" ") +
+  xlab(" ") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+   scale_fill_gradient2(mid = "#9999FF", low = "#FFFFFF", high = "#0000BF")
+
+
+```
+
+
+# Part to whole {.tabset .tabset-fade}
+
+## 100% Stacked Bar
+
+**_NOTE:_** The barplot is the best alternative to pie plots. However, the example below shows that for similar shares it is still difficult to compare them within and across the categories. So for this example, side by side bar charts are a better choice to visualize proportions.
+
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#009600")
+
+df <- diamonds %>% group_by(clarity, cut) %>% summarize(m = mean(price))
+  
+  
+ggplot(df, aes(x = clarity, y = m, group = cut, fill = cut)) +
+  geom_bar(stat = "identity", position="fill") +
+  statworx_hc() +
+  scale_fill_statworx(palette = "custom", col_list = col_list) +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr") 
+
+
+```
+
+
+## Side by side bars
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#009600")
+
+df <- diamonds %>% group_by(clarity, cut) %>% summarize(m = mean(price))
+  
+df <- df %>% group_by(clarity) %>% mutate(sum_per_class = sum(m)) 
+
+df <- df %>% group_by(clarity,cut) %>% mutate(share = m/sum_per_class) 
+
+
+ggplot(df, aes(x = factor(cut), y = share, fill = factor(cut))) + 
+  geom_bar(position="dodge", stat = "identity") +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr", fill = "cut") +
+  statworx_hc() +
+  facet_wrap(~ clarity, ncol = 8, strip.position = "bottom") +
+  scale_fill_statworx(palette = "custom", col_list = col_list) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        panel.spacing = unit(1, "lines"),
+        strip.background = element_blank(),
+        strip.placement = "outside",
+        plot.title = element_text(margin=margin(0,0,0,20))) +
+      scale_y_continuous(expand = c(0,0)) 
+
+
+```
+
+## Side by side lollipop
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+df <- diamonds %>% group_by(clarity, cut) %>% summarize(m = mean(price))
+  
+df <- df %>% group_by(clarity) %>% mutate(sum_per_class = sum(m)) 
+
+df <- df %>% group_by(clarity,cut) %>% mutate(share = m/sum_per_class) 
+
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#009600")
+
+ggplot(df) +
+    geom_linerange(aes(x = factor(cut), ymin = 0, ymax = share, color = factor(cut)), 
+                   position = position_dodge(width = 1)) +
+      geom_point(aes(x = factor(cut), y = share, color = factor(cut)), size = 2,
+               position = position_dodge(width = 2)) +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr", color = "cut") +
+  statworx_hc() +
+  facet_wrap(~ clarity, ncol = 8, strip.position = "bottom") +
+  scale_color_statworx(palette = "custom", col_list = col_list) +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        panel.spacing = unit(1, "lines"),
+        strip.background = element_blank(),
+        strip.placement = "outside") +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 0.3))
+
+```
+
+## Waffle Chart
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+
+# Data
+df <- data.frame(group = rep(c("A", "B", "C", "D"),2),
+                 value = c(44, 12, 8, 8, 30, 9, 6, 5),
+                 fct = c(rep("Factor 1", 4), rep("Factor 2", 4)))
+
+ggplot(df, aes(fill = group, values = value)) +
+  geom_waffle(
+    n_rows = 5, color = "white", flip = TRUE, make_proportional = TRUE, size = 0.33) +
+  facet_wrap(~fct) +
+  statworx_void() +
+  scale_fill_manual(
+                    values = c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#C7014F"),
+                    labels = c("A", "B", "C", "D", "E")) +
+    labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr", fill = "Group")
+
+```
+
+## Tree Map
+```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
+group <- paste("Group", 1:9)
+subgroup <- c("A", "C", "B", "A", "A",
+              "C", "C", "B", "B")
+value <- c(7, 25, 50, 5, 16,
+           18, 30, 12, 41)
+
+
+df <- data.frame(group, subgroup, value) 
+
+
+
+col_list <- c("#0000BF", "#9BAEC1", "#9999FF", "#7D8AA4", "#C7014F", "#83FF83", "#FF9EC4",
+               "#009600", "#283440")
+
+ggplot(df, aes(area = value, fill = group, label = value)) +
+  geom_treemap() +
+  geom_treemap_text(colour = "white",
+                    place = "centre",
+                    size = 15) +
+  scale_fill_statworx(palette = "custom", col_list = col_list) +
+  statworx_void() +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr", fill = "Group")
+
+
+ggplot(df, aes(area = value, fill = value, label = group)) +
+  geom_treemap() +
+  geom_treemap_text(colour = c(rep("white", 2),
+                               1, rep("white", 6)),
+                    place = "centre", size = 15) +
+  scale_color_statworx(palette = "custom", col_list = col_list) +
+  statworx_void() +
+  labs(title = "Lorem ipsum", subtitle = "Consetetur Sadipscing Elitr", fill = "Group")
+
+
+
+```
