@@ -95,14 +95,8 @@ show_col(seq_gradient_pal(statworx_palettes$continous_blue_red[1],
 ```
 
 
-# Theme basic {.tabset .tabset-fade}
-The themes proposed in this section will help to ensure a coherent structure of your graphics. The themes are inspired by those of ggplot. The differences among the themes is reflected in the choice of the axis colors and the grid-lines. Besides the differences there are some standards defined across all themes. Also, if appropriate, the individual themes also offer the possibility to switch to a dark mode.
-
-The theme independent components include: <br>
-1. Font: Arial <br>
-2. Font size: subtitle 18pt (action title), title 10pt (content), axis title 12pt,<br>
-axis text 12pt <br>
-3. Left-Alignment of both titles <br>
+# Themes {.tabset .tabset-fade}
+The themes proposed in this section will help to ensure a coherent structure of your graphics. The themes are inspired by those of ggplot. Also each themes also offers the possibility to switch to a dark mode.
 
 ## Theme classic
 ```{r, eval=TRUE, echo=FALSE, message=FALSE, error=FALSE, warning=FALSE}
